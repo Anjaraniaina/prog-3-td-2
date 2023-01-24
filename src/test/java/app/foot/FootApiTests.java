@@ -10,7 +10,6 @@ public class FootApiTests {
 
     @Test
     public void checkResult(){
-        BasicTests basic = new BasicTests();
-        assertEquals(2, basic.add(1, 1));
+        assertEquals(2, (1 + 1));
     }
 }

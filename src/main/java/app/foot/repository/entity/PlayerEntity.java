@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Entity(name = "player")
 @Data
 @EqualsAndHashCode
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PlayerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

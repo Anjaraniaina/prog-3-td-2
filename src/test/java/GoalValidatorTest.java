@@ -31,7 +31,8 @@ public class GoalValidatorTest {
 
     @Test
     void when_guardian_throws_exception() {
-        assertThrows(RuntimeException.class, () -> subject.accept(app.foot.controller.rest.PlayerScorer.builder()
+        assertThrows(RuntimeException.class, () -> subject.accept(
+                app.foot.controller.rest.PlayerScorer.builder()
                         .player(app.foot.controller.rest.Player.builder()
                                 .isGuardian(true)
                                 .build())

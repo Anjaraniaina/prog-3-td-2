@@ -89,6 +89,7 @@ class MatchIntegrationTest {
         assertEquals(playerRest1(), actual.getTeamA().getScorers().get(0).getPlayer());
     }
 
+    @Transactional
     @Test
     void add_goals_into_match_ko() throws Exception {
         assertThrows(JsonProcessingException.class, () -> mockMvc.perform(post("/matches/{matchId}/goals", 3)

@@ -1,7 +1,6 @@
 package app.foot.controller.rest;
 
 import lombok.*;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -9,6 +9,7 @@ import app.foot.repository.entity.MatchEntity;
 import app.foot.repository.entity.PlayerEntity;
 import app.foot.repository.entity.PlayerScoreEntity;
 import app.foot.repository.mapper.PlayerMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -16,12 +17,17 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static utils.TestUtils.*;
 
+
+@Slf4j
 public class PlayerMapperTest {
     public static final int MATCH_ID = 1;
+
+    public static final String TEAM_NAME = "Barea";
     MatchRepository matchRepositoryMock = mock(MatchRepository.class);
     PlayerRepository playerRepositoryMock = mock(PlayerRepository.class);
     TeamRepository teamRepositoryMock = mock(TeamRepository.class);
@@ -99,5 +105,21 @@ public class PlayerMapperTest {
                 .ownGoal(false)
                 .match(matchEntity1)
                 .build(), actual);
+    }
+
+
+    @Test
+    void player_to_entity_ok(){
+        when(teamRepositoryMock.findByName(TEAM_NAME)).thenReturn(teamBarea());
+        PlayerEntity expected = playerEntityRakoto(teamBarea());
+        PlayerEntity actual = subject.toEntity(playerModelRakoto(playerEntityRakoto(teamBarea())));
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void player_to_entity_ko(){
+        when(teamRepositoryMock.findByName(TEAM_NAME)).thenReturn(null);
+        assertThrows(NullPointerException.class, () -> subject.toEntity(playerModelRakoto(playerEntityRakoto(teamBarea()))));
     }
 }

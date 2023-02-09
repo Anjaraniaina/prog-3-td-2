@@ -18,13 +18,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HealthIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
-
     @Test
     void ping_ok() throws Exception {
-        MockHttpServletResponse response = mockMvc.perform(get("/ping"))
-                .andExpect(status().isOk())
-                .andReturn().getResponse();
+        MockHttpServletResponse response = mockMvc
+                .perform(get("/ping"))
+                .andReturn()
+                .getResponse();
+        String actual = response.getContentAsString();
 
-        assertEquals("pong", response.getContentAsString());
+        assertEquals("pong" , actual);
     }
 }

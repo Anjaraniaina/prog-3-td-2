@@ -6,6 +6,7 @@ import app.foot.service.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,19 +23,26 @@ public class PlayerController {
     public List<Player> getPlayers() {
         return service.getPlayers().stream()
                 .map(mapper::toRest)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     @PostMapping("/players")
     public List<Player> addPlayers(@RequestBody List<Player> toCreate) {
         List<app.foot.model.Player> domain = toCreate.stream()
                 .map(mapper::toDomain)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
         return service.createPlayers(domain).stream()
                 .map(mapper::toRest)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
-    //TODO: add PUT /players where you can modify the name and the guardian status of a player
-    // Don't forget to add integration tests for this
+    @PutMapping("/players")
+    public List<Player> updatePlayers(@RequestBody List<Player> toUpdate) {
+        List<app.foot.model.Player> domain = toUpdate.stream()
+                .map(mapper::toDomainUpdate)
+                .toList();
+        return service.updatePlayers(domain).stream()
+                .map(mapper::toRest)
+                .toList();
+    }
 }
